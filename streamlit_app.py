@@ -7,138 +7,114 @@ import io
 st.set_page_config(
     page_title="Détection de faux billets",
     page_icon="💵",
-    layout="wide"
+    layout="wide",
+    initial_sidebar_state="expanded"
 )
 
-# CSS DESIGN MODERNE VERT
+# CSS SIMPLE ET ATTRACTIF
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-    
-    .stApp {
-        background: linear-gradient(135deg, #a7f3d0 0%, #6ee7b7 50%, #34d399 100%);
-        font-family: 'Poppins', sans-serif;
+    .main {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
     }
     
-    .main-header {
-        background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
-        backdrop-filter: blur(20px);
-        padding: 3rem 2rem;
-        border-radius: 20px;
-        text-align: center;
-        margin: 2rem 0;
-        box-shadow: 0 20px 40px rgba(16, 185, 129, 0.2);
-        border: 1px solid rgba(255,255,255,0.3);
-    }
-    
-    .main-header h1 {
-        background: linear-gradient(135deg, #065f46, #10b981);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        font-size: 3rem;
-        font-weight: 700;
-        margin-bottom: 1rem;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-    }
-    
-    .main-header p {
-        color: #047857;
-        font-size: 1.3rem;
-        font-weight: 400;
-        margin: 0;
-    }
-
-    .glass-card {
-        background: linear-gradient(135deg, rgba(255,255,255,0.8), rgba(255,255,255,0.6));
-        backdrop-filter: blur(15px);
+    .custom-header {
+        background: rgba(255, 255, 255, 0.1);
         padding: 2rem;
         border-radius: 15px;
-        box-shadow: 0 15px 35px rgba(16, 185, 129, 0.15);
-        border: 1px solid rgba(255,255,255,0.4);
-        margin: 1rem 0;
-    }
-
-    .metric-card {
-        background: linear-gradient(135deg, #10b981, #059669);
-        color: white;
-        padding: 1.5rem;
-        border-radius: 12px;
+        margin-bottom: 2rem;
         text-align: center;
-        box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
-        transform: translateY(-5px);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
     }
     
-    .metric-card h3 {
+    .custom-header h1 {
+        color: white;
         font-size: 2.5rem;
-        font-weight: 700;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    
+    .custom-header p {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 1.2rem;
         margin: 0;
     }
+
+    .stat-card {
+        background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        padding: 1.5rem;
+        border-radius: 12px;
+        color: white;
+        text-align: center;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        margin-bottom: 1rem;
+    }
     
-    .metric-card p {
-        margin: 0.5rem 0 0;
+    .stat-card h3 {
+        margin: 0;
+        font-size: 2rem;
+        font-weight: bold;
+    }
+    
+    .stat-card p {
+        margin: 0.5rem 0 0 0;
         opacity: 0.9;
-        font-weight: 500;
+    }
+
+    .upload-zone {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 2rem;
+        border-radius: 15px;
+        border: 2px dashed rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(10px);
     }
 
     .stButton > button {
         background: linear-gradient(135deg, #10b981, #059669);
         color: white;
         border: none;
-        padding: 1rem 2rem;
-        border-radius: 12px;
-        font-weight: 600;
-        font-size: 1.1rem;
-        box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+        padding: 0.75rem 2rem;
+        border-radius: 10px;
+        font-weight: bold;
+        font-size: 1rem;
+        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
         transition: all 0.3s ease;
         width: 100%;
     }
     
     .stButton > button:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 12px 30px rgba(16, 185, 129, 0.5);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
     }
 
-    .upload-zone {
-        border: 3px dashed #10b981;
-        border-radius: 15px;
-        padding: 2rem;
-        text-align: center;
-        background: rgba(16, 185, 129, 0.05);
-        transition: all 0.3s ease;
+    [data-testid="stSidebar"] {
+        background: linear-gradient(180deg, #4f46e5, #7c3aed);
     }
-    
-    .upload-zone:hover {
-        background: rgba(16, 185, 129, 0.1);
-        border-color: #059669;
+
+    .metric-container {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 1rem;
+        border-radius: 10px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
     }
 
     .result-card {
-        background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.8));
-        backdrop-filter: blur(10px);
-        padding: 2rem;
-        border-radius: 15px;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 1.5rem;
+        border-radius: 12px;
         margin: 1rem 0;
-        box-shadow: 0 10px 25px rgba(16, 185, 129, 0.1);
-        border: 1px solid rgba(16, 185, 129, 0.2);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
     }
 
-    .success-badge {
-        background: linear-gradient(135deg, #10b981, #059669);
-        color: white;
-        padding: 0.5rem 1rem;
-        border-radius: 20px;
-        font-weight: 600;
-        display: inline-block;
-        margin: 0.5rem 0;
-    }
-
-    .danger-badge {
-        background: linear-gradient(135deg, #ef4444, #dc2626);
-        color: white;
-        padding: 0.5rem 1rem;
-        border-radius: 20px;
-        font-weight: 600;
-        display: inline-block;
+    .chart-container {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 1rem;
+        border-radius: 10px;
         margin: 0.5rem 0;
     }
 </style>
@@ -146,90 +122,135 @@ st.markdown("""
 
 # HEADER PRINCIPAL
 st.markdown("""
-<div class="main-header">
-    <h1>🎯 Détecteur de Faux Billets IA</h1>
-    <p>Technologie avancée pour l'authentification automatique des billets</p>
+<div class="custom-header">
+    <h1>🎯 Détecteur de Faux Billets</h1>
+    <p>Analyse intelligente et prédiction automatique</p>
 </div>
 """, unsafe_allow_html=True)
 
-# INITIALISATION STATS
-if 'stats' not in st.session_state:
-    st.session_state.stats = {'total': 0, 'vrais': 0, 'faux': 0}
+# SIDEBAR AVEC INFORMATIONS
+with st.sidebar:
+    st.markdown("## 📊 Tableau de Bord")
+    
+    # Initialisation des statistiques
+    if 'stats' not in st.session_state:
+        st.session_state.stats = {
+            'total_analyses': 0,
+            'billets_authentiques': 0,
+            'billets_suspects': 0
+        }
+    
+    # Affichage des statistiques dans la sidebar
+    st.markdown(f"""
+    <div class="stat-card">
+        <h3>{st.session_state.stats['total_analyses']}</h3>
+        <p>Total Analysé</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        st.markdown(f"""
+        <div style="background: #10b981; padding: 1rem; border-radius: 8px; text-align: center; color: white;">
+            <h4 style="margin: 0;">{st.session_state.stats['billets_authentiques']}</h4>
+            <p style="margin: 0; font-size: 0.8rem;">✅ Vrais</p>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col2:
+        st.markdown(f"""
+        <div style="background: #ef4444; padding: 1rem; border-radius: 8px; text-align: center; color: white;">
+            <h4 style="margin: 0;">{st.session_state.stats['billets_suspects']}</h4>
+            <p style="margin: 0; font-size: 0.8rem;">❌ Faux</p>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    st.markdown("---")
+    st.markdown("### 🔧 Guide d'utilisation")
+    st.markdown("""
+    1. **Téléchargez** votre fichier CSV
+    2. **Sélectionnez** le séparateur
+    3. **Lancez** l'analyse
+    4. **Visualisez** les résultats
+    5. **Téléchargez** le rapport
+    """)
 
-# MÉTRIQUES VISUELLES
-st.markdown("## 📊 Tableau de Bord")
-col1, col2, col3 = st.columns(3)
+# SECTION PRINCIPALE
+col1, col2 = st.columns([2, 1])
 
 with col1:
-    st.markdown(f"""
-    <div class="metric-card">
-        <h3>{st.session_state.stats['total']}</h3>
-        <p>📊 Total Analysé</p>
-    </div>
-    """, unsafe_allow_html=True)
-
-with col2:
-    st.markdown(f"""
-    <div class="metric-card" style="background: linear-gradient(135deg, #10b981, #047857);">
-        <h3>{st.session_state.stats['vrais']}</h3>
-        <p>✅ Authentiques</p>
-    </div>
-    """, unsafe_allow_html=True)
-
-with col3:
-    st.markdown(f"""
-    <div class="metric-card" style="background: linear-gradient(135deg, #ef4444, #dc2626);">
-        <h3>{st.session_state.stats['faux']}</h3>
-        <p>❌ Suspects</p>
-    </div>
-    """, unsafe_allow_html=True)
-
-# FORMULAIRE D'UPLOAD
-st.markdown("## 📤 Zone d'Analyse")
-
-with st.container():
-    st.markdown('<div class="glass-card">', unsafe_allow_html=True)
+    st.markdown("## 📤 Zone d'Analyse")
     
     with st.form("formulaire_prediction"):
         st.markdown('<div class="upload-zone">', unsafe_allow_html=True)
         
+        # Upload de fichier
         charger_file = st.file_uploader(
-            "📁 Glissez votre fichier CSV ici",
+            "📁 Sélectionnez votre fichier CSV",
             type="csv",
-            help="Formats supportés: CSV avec données des billets"
+            help="Téléchargez un fichier CSV contenant les caractéristiques des billets"
         )
         
-        col_form1, col_form2 = st.columns(2)
-        with col_form1:
-            separateur = st.selectbox(
-                "🔧 Séparateur de données",
-                options=["-- Sélectionner --", ",", ";", ".", "/", "|", "\\t", " "]
-            )
+        # Sélection du séparateur
+        separateur = st.selectbox(
+            "🔧 Choisissez le séparateur",
+            options=["-- Sélectionner --", ",", ";", ".", "/", "|", "\\t", " "],
+            help="Sélectionnez le caractère qui sépare vos données"
+        )
         
         st.markdown('</div>', unsafe_allow_html=True)
         
-        bouton_valider = st.form_submit_button("🚀 Lancer l'Analyse IA")
-    
-    st.markdown('</div>', unsafe_allow_html=True)
+        # Bouton de validation
+        bouton_valider = st.form_submit_button("🚀 Analyser les Billets")
 
-# TRAITEMENT ET RÉSULTATS
+# Informations système dans la colonne droite
+with col2:
+    st.markdown("## ⚙️ Statut Système")
+    
+    st.markdown("""
+    <div class="metric-container">
+        <p style="color: white; margin: 0;"><strong>🟢 API Active</strong></p>
+        <p style="color: rgba(255,255,255,0.8); margin: 0; font-size: 0.9rem;">Modèle IA opérationnel</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("---")
+    
+    st.markdown("### 📈 Fonctionnalités")
+    st.markdown("""
+    - ✅ **Analyse rapide**
+    - ✅ **Visualisations**  
+    - ✅ **Export CSV**
+    - ✅ **Interface intuitive**
+    """)
+
+# TRAITEMENT DU FORMULAIRE
 if bouton_valider:
     if charger_file is not None:
         if separateur == "-- Sélectionner --":
-            st.warning("⚠️ Veuillez sélectionner un séparateur")
+            st.warning("⚠️ Veuillez choisir un séparateur pour traiter vos données")
         else:
             try:
-                # Animation de chargement
-                with st.spinner('🔄 Analyse par Intelligence Artificielle...'):
-                    df = pd.read_csv(charger_file, sep=separateur)
-                    
-                st.markdown('<div class="success-badge">✅ Fichier chargé avec succès</div>', unsafe_allow_html=True)
+                # Barre de progression
+                progress_bar = st.progress(0)
+                status_text = st.empty()
                 
-                # Aperçu élégant
-                st.markdown('<div class="result-card">', unsafe_allow_html=True)
+                status_text.text('🔄 Chargement du fichier...')
+                progress_bar.progress(25)
+                
+                # Lecture du fichier
+                df = pd.read_csv(charger_file, sep=separateur)
+                st.success("✅ Fichier chargé avec succès!")
+                
+                status_text.text('📊 Préparation des données...')
+                progress_bar.progress(50)
+                
+                # Aperçu des données
                 st.markdown("### 👀 Aperçu des Données")
                 st.dataframe(df.head(), use_container_width=True)
-                st.markdown('</div>', unsafe_allow_html=True)
+                
+                status_text.text('🤖 Analyse par IA en cours...')
+                progress_bar.progress(75)
                 
                 # Appel API
                 reponse = requests.post(
@@ -238,92 +259,125 @@ if bouton_valider:
                     data={"separateur": separateur}
                 )
                 
+                progress_bar.progress(100)
+                status_text.text('✅ Analyse terminée!')
+                
                 if reponse.status_code == 200:
                     resultat_json = reponse.json()
                     df_resultat = pd.DataFrame(resultat_json['resultat'])
                     
                     # Mise à jour des statistiques
                     compter = df_resultat['prediction'].value_counts()
-                    st.session_state.stats['total'] = len(df_resultat)
-                    st.session_state.stats['vrais'] = compter.get(1, 0)
-                    st.session_state.stats['faux'] = compter.get(0, 0)
+                    st.session_state.stats['total_analyses'] = len(df_resultat)
+                    st.session_state.stats['billets_authentiques'] = compter.get(1, 0)
+                    st.session_state.stats['billets_suspects'] = compter.get(0, 0)
                     
-                    # Résultats avec style
-                    st.markdown("## 🎯 Résultats de l'Analyse IA")
+                    # RÉSULTATS
+                    st.markdown("## 🎯 Résultats de l'Analyse")
                     
-                    # Graphique et stats
-                    col_res1, col_res2 = st.columns([1, 1])
+                    # Métriques principales
+                    col_m1, col_m2, col_m3, col_m4 = st.columns(4)
                     
-                    with col_res1:
-                        st.markdown('<div class="result-card">', unsafe_allow_html=True)
-                        st.markdown("### 📊 Visualisation")
+                    with col_m1:
+                        st.metric("📊 Total", len(df_resultat))
+                    with col_m2:
+                        st.metric("✅ Authentiques", st.session_state.stats['billets_authentiques'])
+                    with col_m3:
+                        st.metric("❌ Suspects", st.session_state.stats['billets_suspects'])
+                    with col_m4:
+                        pourcentage_authentiques = (st.session_state.stats['billets_authentiques'] / len(df_resultat)) * 100
+                        st.metric("📈 Taux Validité", f"{pourcentage_authentiques:.1f}%")
+                    
+                    # Graphiques avec Streamlit natif
+                    st.markdown("### 📊 Visualisations des Résultats")
+                    
+                    col_g1, col_g2 = st.columns(2)
+                    
+                    with col_g1:
+                        st.markdown('<div class="chart-container">', unsafe_allow_html=True)
+                        st.markdown("#### 🥧 Répartition des Prédictions")
                         
+                        # Création d'un DataFrame pour le graphique
                         chart_data = pd.DataFrame({
-                            'Authentiques': [st.session_state.stats['vrais']],
-                            'Suspects': [st.session_state.stats['faux']]
+                            'Type': ['Authentiques', 'Suspects'],
+                            'Nombre': [st.session_state.stats['billets_authentiques'], 
+                                      st.session_state.stats['billets_suspects']]
                         })
-                        st.bar_chart(chart_data, color=["#10b981", "#ef4444"], height=300)
+                        
+                        # Graphique en barres avec Streamlit
+                        st.bar_chart(chart_data.set_index('Type'), height=300, color=["#10b981", "#ef4444"])
                         st.markdown('</div>', unsafe_allow_html=True)
                     
-                    with col_res2:
-                        st.markdown('<div class="result-card">', unsafe_allow_html=True)
-                        st.markdown("### 📈 Analyse Détaillée")
+                    with col_g2:
+                        st.markdown('<div class="chart-container">', unsafe_allow_html=True)
+                        st.markdown("#### 📈 Statistiques Détaillées")
                         
-                        total = st.session_state.stats['total']
-                        pct_vrais = (st.session_state.stats['vrais'] / total) * 100
-                        pct_faux = (st.session_state.stats['faux'] / total) * 100
+                        # Affichage des pourcentages
+                        total = st.session_state.stats['total_analyses']
+                        pct_auth = (st.session_state.stats['billets_authentiques'] / total) * 100
+                        pct_susp = (st.session_state.stats['billets_suspects'] / total) * 100
                         
                         st.markdown(f"""
-                        <div style="text-align: center;">
-                            <div style="background: linear-gradient(135deg, #10b981, #059669); color: white; padding: 1rem; margin: 0.5rem 0; border-radius: 10px;">
+                        <div style="color: white; text-align: center;">
+                            <div style="background: #10b981; padding: 1rem; margin: 0.5rem 0; border-radius: 8px;">
                                 <h4>✅ Billets Authentiques</h4>
-                                <h2>{pct_vrais:.1f}%</h2>
-                                <p>{st.session_state.stats['vrais']} sur {total}</p>
+                                <p style="font-size: 1.5rem; margin: 0;">{pct_auth:.1f}%</p>
+                                <p style="margin: 0;">({st.session_state.stats['billets_authentiques']} sur {total})</p>
                             </div>
-                            <div style="background: linear-gradient(135deg, #ef4444, #dc2626); color: white; padding: 1rem; margin: 0.5rem 0; border-radius: 10px;">
+                            <div style="background: #ef4444; padding: 1rem; margin: 0.5rem 0; border-radius: 8px;">
                                 <h4>❌ Billets Suspects</h4>
-                                <h2>{pct_faux:.1f}%</h2>
-                                <p>{st.session_state.stats['faux']} sur {total}</p>
+                                <p style="font-size: 1.5rem; margin: 0;">{pct_susp:.1f}%</p>
+                                <p style="margin: 0;">({st.session_state.stats['billets_suspects']} sur {total})</p>
                             </div>
                         </div>
                         """, unsafe_allow_html=True)
                         st.markdown('</div>', unsafe_allow_html=True)
                     
-                    # Alerte selon résultats
-                    if st.session_state.stats['faux'] > 0:
-                        st.error(f"⚠️ ATTENTION: {st.session_state.stats['faux']} billet(s) suspect(s) détecté(s)!")
-                    else:
-                        st.success("🎉 Excellente nouvelle! Tous les billets sont authentiques.")
-                    
-                    # Données complètes
+                    # Affichage détaillé des comptes
+                    st.markdown("### 📋 Résumé des Prédictions")
                     st.markdown('<div class="result-card">', unsafe_allow_html=True)
-                    st.markdown("### 📋 Rapport Complet")
-                    st.dataframe(df_resultat, use_container_width=True)
+                    
+                    st.write("**Détail par catégorie :**")
+                    st.write(compter)
+                    
+                    # Affichage conditionnel selon les résultats
+                    if st.session_state.stats['billets_suspects'] > 0:
+                        st.error(f"⚠️ Attention : {st.session_state.stats['billets_suspects']} billet(s) suspect(s) détecté(s) !")
+                    else:
+                        st.success("✅ Aucun billet suspect détecté. Tous les billets semblent authentiques.")
+                    
                     st.markdown('</div>', unsafe_allow_html=True)
                     
-                    # Téléchargement stylisé
-                    csv_data = df_resultat.to_csv(index=False)
+                    # Tableau des résultats
+                    st.markdown("### 📄 Données Détaillées")
+                    st.dataframe(df_resultat, use_container_width=True)
+                    
+                    # Téléchargement
+                    csv_memoire = io.StringIO()
+                    df_resultat.to_csv(csv_memoire, index=False)
+                    csv_data = csv_memoire.getvalue()
+                    
                     st.download_button(
-                        "💾 Télécharger le Rapport Complet",
+                        label="💾 Télécharger les Résultats",
                         data=csv_data,
-                        file_name="rapport_billets.csv",
+                        file_name="predictions_billets.csv",
                         mime="text/csv",
                         use_container_width=True
                     )
                     
                 else:
-                    st.error(f"❌ Erreur de connexion API (Code: {reponse.status_code})")
+                    st.error(f"❌ Erreur API (Code: {reponse.status_code})")
+                    st.text(reponse.text)
                     
             except Exception as e:
-                st.error(f"❌ Erreur lors du traitement: {str(e)}")
+                st.error(f"❌ Erreur: {str(e)}")
     else:
-        st.error("📁 Veuillez d'abord télécharger un fichier CSV")
+        st.error("📁 Veuillez télécharger un fichier CSV")
 
-# FOOTER ÉLÉGANT
+# FOOTER
 st.markdown("---")
 st.markdown("""
-<div style="text-align: center; padding: 2rem; color: #047857;">
-    <h4>🔒 Système de Détection Sécurisé</h4>
-    <p>Propulsé par l'Intelligence Artificielle • Version 2.0</p>
+<div style="text-align: center; padding: 1rem; color: rgba(255,255,255,0.8);">
+    <p><strong>🔒 Détection Sécurisée de Faux Billets</strong> - Propulsé par l'IA</p>
 </div>
 """, unsafe_allow_html=True)
