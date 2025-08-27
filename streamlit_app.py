@@ -6,7 +6,7 @@ import io
 # CONFIGURATION DE LA PAGE
 st.set_page_config(
     page_title="Détection de faux billets",
-    page_icon="💵",
+    page_icon="",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -136,14 +136,14 @@ st.markdown("""
 # HEADER PRINCIPAL
 st.markdown("""
 <div class="custom-header">
-    <h1>🎯 Détecteur de Faux Billets</h1>
+    <h1>Détecteur de Faux Billets</h1>
     <p>Analyse intelligente et prédiction automatique</p>
 </div>
 """, unsafe_allow_html=True)
 
 # SIDEBAR AVEC INFORMATIONS
 with st.sidebar:
-    st.markdown("## 📊 Tableau de Bord")
+    st.markdown("Tableau de Bord")
     
     # Initialisation des statistiques
     if 'stats' not in st.session_state:
@@ -166,7 +166,7 @@ with st.sidebar:
         st.markdown(f"""
         <div style="background: #10b981; padding: 1rem; border-radius: 8px; text-align: center; color: white; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);">
             <h4 style="margin: 0;">{st.session_state.stats['billets_authentiques']}</h4>
-            <p style="margin: 0; font-size: 0.8rem;">✅ Vrais</p>
+            <p style="margin: 0; font-size: 0.8rem;">Vrais</p>
         </div>
         """, unsafe_allow_html=True)
     
@@ -174,12 +174,12 @@ with st.sidebar:
         st.markdown(f"""
         <div style="background: #64748b; padding: 1rem; border-radius: 8px; text-align: center; color: white; box-shadow: 0 2px 8px rgba(100, 116, 139, 0.3);">
             <h4 style="margin: 0;">{st.session_state.stats['billets_suspects']}</h4>
-            <p style="margin: 0; font-size: 0.8rem;">❌ Faux</p>
+            <p style="margin: 0; font-size: 0.8rem;">Faux</p>
         </div>
         """, unsafe_allow_html=True)
     
     st.markdown("---")
-    st.markdown("### 🔧 Guide d'utilisation")
+    st.markdown("Guide d'utilisation")
     st.markdown("""
     1. **Téléchargez** votre fichier CSV
     2. **Sélectionnez** le séparateur
@@ -192,21 +192,21 @@ with st.sidebar:
 col1, col2 = st.columns([2, 1])
 
 with col1:
-    st.markdown("## 📤 Zone d'Analyse")
+    st.markdown("Zone d'Analyse")
     
     with st.form("formulaire_prediction"):
         st.markdown('<div class="upload-zone">', unsafe_allow_html=True)
         
         # Upload de fichier
         charger_file = st.file_uploader(
-            "📁 Sélectionnez votre fichier CSV",
+            "Sélectionnez votre fichier CSV",
             type="csv",
             help="Téléchargez un fichier CSV contenant les caractéristiques des billets"
         )
         
         # Sélection du séparateur
         separateur = st.selectbox(
-            "🔧 Choisissez le séparateur",
+            "Choisissez le séparateur",
             options=["-- Sélectionner --", ",", ";", ".", "/", "|", "\\t", " "],
             help="Sélectionnez le caractère qui sépare vos données"
         )
@@ -214,53 +214,34 @@ with col1:
         st.markdown('</div>', unsafe_allow_html=True)
         
         # Bouton de validation
-        bouton_valider = st.form_submit_button("🚀 Analyser les Billets")
-
-# Informations système dans la colonne droite
-with col2:
-    st.markdown("## ⚙️ Statut Système")
-    
-    st.markdown("""
-    <div class="metric-container">
-        <p style="color: #10b981; margin: 0; font-weight: 600;"><strong>🟢 API Active</strong></p>
-        <p style="color: #64748b; margin: 0; font-size: 0.9rem;">Modèle IA opérationnel</p>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    st.markdown("### 📈 Fonctionnalités")
-    st.markdown("""
-    - ✅ **Analyse rapide**
-    - ✅ **Visualisations**  
-    - ✅ **Export CSV**
-    - ✅ **Interface intuitive**
-    """)
+        bouton_valider = st.form_submit_button("Analyser les Billets")
 
 # TRAITEMENT DU FORMULAIRE
 if bouton_valider:
     if charger_file is not None:
         if separateur == "-- Sélectionner --":
-            st.warning("⚠️ Veuillez choisir un séparateur pour traiter vos données")
+            st.warning("Veuillez choisir un séparateur pour traiter vos données")
         else:
             try:
                 # Barre de progression
                 progress_bar = st.progress(0)
                 status_text = st.empty()
                 
-                status_text.text('🔄 Chargement du fichier...')
+                status_text.text('Chargement du fichier...')
                 progress_bar.progress(25)
                 
                 # Lecture du fichier
                 df = pd.read_csv(charger_file, sep=separateur)
-                st.success("✅ Fichier chargé avec succès!")
+                st.success("Fichier chargé avec succès!")
                 
-                status_text.text('📊 Préparation des données...')
+                status_text.text('Préparation des données...')
                 progress_bar.progress(50)
                 
                 # Aperçu des données
-                st.markdown("### 👀 Aperçu des Données")
+                st.markdown("Aperçu des Données")
                 st.dataframe(df.head(), use_container_width=True)
                 
-                status_text.text('🤖 Analyse par IA en cours...')
+                status_text.text('Analyse par IA en cours...')
                 progress_bar.progress(75)
                 
                 # Appel API
@@ -271,7 +252,7 @@ if bouton_valider:
                 )
                 
                 progress_bar.progress(100)
-                status_text.text('✅ Analyse terminée!')
+                status_text.text('Analyse terminée!')
                 
                 if reponse.status_code == 200:
                     resultat_json = reponse.json()
@@ -284,29 +265,29 @@ if bouton_valider:
                     st.session_state.stats['billets_suspects'] = compter.get(0, 0)
                     
                     # RÉSULTATS
-                    st.markdown("## 🎯 Résultats de l'Analyse")
+                    st.markdown("Résultats de l'Analyse")
                     
                     # Métriques principales
                     col_m1, col_m2, col_m3, col_m4 = st.columns(4)
                     
                     with col_m1:
-                        st.metric("📊 Total", len(df_resultat))
+                        st.metric("Total", len(df_resultat))
                     with col_m2:
-                        st.metric("✅ Authentiques", st.session_state.stats['billets_authentiques'])
+                        st.metric("Authentiques", st.session_state.stats['billets_authentiques'])
                     with col_m3:
-                        st.metric("❌ Suspects", st.session_state.stats['billets_suspects'])
+                        st.metric("Suspects", st.session_state.stats['billets_suspects'])
                     with col_m4:
                         pourcentage_authentiques = (st.session_state.stats['billets_authentiques'] / len(df_resultat)) * 100
-                        st.metric("📈 Taux Validité", f"{pourcentage_authentiques:.1f}%")
+                        st.metric("Taux Validité", f"{pourcentage_authentiques:.1f}%")
                     
                     # Graphiques avec Streamlit natif
-                    st.markdown("### 📊 Visualisations des Résultats")
+                    st.markdown("Visualisations des Résultats")
                     
                     col_g1, col_g2 = st.columns(2)
                     
                     with col_g1:
                         st.markdown('<div class="chart-container">', unsafe_allow_html=True)
-                        st.markdown("#### 📈 Répartition des Prédictions")
+                        st.markdown("Répartition des Prédictions")
                         
                         # Création d'un DataFrame pour le graphique
                         chart_data = pd.DataFrame({
@@ -321,7 +302,7 @@ if bouton_valider:
                     
                     with col_g2:
                         st.markdown('<div class="chart-container">', unsafe_allow_html=True)
-                        st.markdown("#### 📊 Statistiques Détaillées")
+                        st.markdown("Statistiques Détaillées")
                         
                         # Affichage des pourcentages
                         total = st.session_state.stats['total_analyses']
@@ -331,12 +312,12 @@ if bouton_valider:
                         st.markdown(f"""
                         <div style="text-align: center;">
                             <div style="background: #f0fdf4; border: 1px solid #10b981; color: #065f46; padding: 1rem; margin: 0.5rem 0; border-radius: 8px;">
-                                <h4>✅ Billets Authentiques</h4>
+                                <h4>Billets Authentiques</h4>
                                 <p style="font-size: 1.5rem; margin: 0; color: #10b981; font-weight: bold;">{pct_auth:.1f}%</p>
                                 <p style="margin: 0; color: #065f46;">({st.session_state.stats['billets_authentiques']} sur {total})</p>
                             </div>
                             <div style="background: #f8fafc; border: 1px solid #64748b; color: #475569; padding: 1rem; margin: 0.5rem 0; border-radius: 8px;">
-                                <h4>❌ Billets Suspects</h4>
+                                <h4>Billets Suspects</h4>
                                 <p style="font-size: 1.5rem; margin: 0; color: #64748b; font-weight: bold;">{pct_susp:.1f}%</p>
                                 <p style="margin: 0; color: #475569;">({st.session_state.stats['billets_suspects']} sur {total})</p>
                             </div>
@@ -345,7 +326,7 @@ if bouton_valider:
                         st.markdown('</div>', unsafe_allow_html=True)
                     
                     # Affichage détaillé des comptes
-                    st.markdown("### 📋 Résumé des Prédictions")
+                    st.markdown("Résumé des Prédictions")
                     st.markdown('<div class="result-card">', unsafe_allow_html=True)
                     
                     st.write("**Détail par catégorie :**")
@@ -353,14 +334,14 @@ if bouton_valider:
                     
                     # Affichage conditionnel selon les résultats
                     if st.session_state.stats['billets_suspects'] > 0:
-                        st.error(f"⚠️ Attention : {st.session_state.stats['billets_suspects']} billet(s) suspect(s) détecté(s) !")
+                        st.error(f"Attention : {st.session_state.stats['billets_suspects']} billet(s) suspect(s) détecté(s) !")
                     else:
-                        st.success("✅ Aucun billet suspect détecté. Tous les billets semblent authentiques.")
+                        st.success("Aucun billet suspect détecté. Tous les billets semblent authentiques.")
                     
                     st.markdown('</div>', unsafe_allow_html=True)
                     
                     # Tableau des résultats
-                    st.markdown("### 📄 Données Détaillées")
+                    st.markdown("Données Détaillées")
                     st.dataframe(df_resultat, use_container_width=True)
                     
                     # Téléchargement
@@ -369,7 +350,7 @@ if bouton_valider:
                     csv_data = csv_memoire.getvalue()
                     
                     st.download_button(
-                        label="💾 Télécharger les Résultats",
+                        label="Télécharger les Résultats",
                         data=csv_data,
                         file_name="predictions_billets.csv",
                         mime="text/csv",
@@ -377,18 +358,18 @@ if bouton_valider:
                     )
                     
                 else:
-                    st.error(f"❌ Erreur API (Code: {reponse.status_code})")
+                    st.error(f"Erreur API (Code: {reponse.status_code})")
                     st.text(reponse.text)
                     
             except Exception as e:
-                st.error(f"❌ Erreur: {str(e)}")
+                st.error(f"Erreur: {str(e)}")
     else:
-        st.error("📁 Veuillez télécharger un fichier CSV")
+        st.error("Veuillez télécharger un fichier CSV")
 
 # FOOTER
 st.markdown("---")
 st.markdown("""
 <div style="text-align: center; padding: 1rem; color: #64748b;">
-    <p><strong>🔒 Détection Sécurisée de Faux Billets</strong> - Propulsé par l'IA</p>
+    <p><strong>Détection Sécurisée de Faux Billets</strong> - Réaliser par Nihad ABOUDOU TRAORE</p>
 </div>
 """, unsafe_allow_html=True)
