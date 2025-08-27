@@ -2,8 +2,6 @@ import streamlit as st
 import pandas as pd
 import requests
 import io
-import plotly.express as px
-import plotly.graph_objects as go
 
 # CONFIGURATION DE LA PAGE
 st.set_page_config(
@@ -92,10 +90,6 @@ st.markdown("""
         box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
     }
 
-    .sidebar .sidebar-content {
-        background: linear-gradient(180deg, #4f46e5, #7c3aed);
-    }
-    
     [data-testid="stSidebar"] {
         background: linear-gradient(180deg, #4f46e5, #7c3aed);
     }
@@ -106,6 +100,22 @@ st.markdown("""
         border-radius: 10px;
         backdrop-filter: blur(10px);
         border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .result-card {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 1.5rem;
+        border-radius: 12px;
+        margin: 1rem 0;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .chart-container {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 1rem;
+        border-radius: 10px;
+        margin: 0.5rem 0;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -278,52 +288,68 @@ if bouton_valider:
                         pourcentage_authentiques = (st.session_state.stats['billets_authentiques'] / len(df_resultat)) * 100
                         st.metric("📈 Taux Validité", f"{pourcentage_authentiques:.1f}%")
                     
-                    # Graphiques
+                    # Graphiques avec Streamlit natif
+                    st.markdown("### 📊 Visualisations des Résultats")
+                    
                     col_g1, col_g2 = st.columns(2)
                     
                     with col_g1:
-                        # Graphique en secteurs
-                        labels = ['Authentiques', 'Suspects']
-                        values = [st.session_state.stats['billets_authentiques'], 
-                                 st.session_state.stats['billets_suspects']]
-                        colors = ['#10b981', '#ef4444']
+                        st.markdown('<div class="chart-container">', unsafe_allow_html=True)
+                        st.markdown("#### 🥧 Répartition des Prédictions")
                         
-                        fig_pie = go.Figure(data=[go.Pie(
-                            labels=labels, 
-                            values=values,
-                            hole=0.3,
-                            marker_colors=colors,
-                            textfont_size=16
-                        )])
+                        # Création d'un DataFrame pour le graphique
+                        chart_data = pd.DataFrame({
+                            'Type': ['Authentiques', 'Suspects'],
+                            'Nombre': [st.session_state.stats['billets_authentiques'], 
+                                      st.session_state.stats['billets_suspects']]
+                        })
                         
-                        fig_pie.update_layout(
-                            title="Répartition des Prédictions",
-                            title_font_size=18,
-                            height=400
-                        )
-                        
-                        st.plotly_chart(fig_pie, use_container_width=True)
+                        # Graphique en barres avec Streamlit
+                        st.bar_chart(chart_data.set_index('Type'), height=300, color=["#10b981", "#ef4444"])
+                        st.markdown('</div>', unsafe_allow_html=True)
                     
                     with col_g2:
-                        # Graphique en barres
-                        fig_bar = go.Figure(data=[
-                            go.Bar(x=labels, y=values, 
-                                  marker_color=colors,
-                                  text=values,
-                                  textposition='auto')
-                        ])
+                        st.markdown('<div class="chart-container">', unsafe_allow_html=True)
+                        st.markdown("#### 📈 Statistiques Détaillées")
                         
-                        fig_bar.update_layout(
-                            title="Nombre par Catégorie",
-                            title_font_size=18,
-                            height=400,
-                            yaxis_title="Nombre de billets"
-                        )
+                        # Affichage des pourcentages
+                        total = st.session_state.stats['total_analyses']
+                        pct_auth = (st.session_state.stats['billets_authentiques'] / total) * 100
+                        pct_susp = (st.session_state.stats['billets_suspects'] / total) * 100
                         
-                        st.plotly_chart(fig_bar, use_container_width=True)
+                        st.markdown(f"""
+                        <div style="color: white; text-align: center;">
+                            <div style="background: #10b981; padding: 1rem; margin: 0.5rem 0; border-radius: 8px;">
+                                <h4>✅ Billets Authentiques</h4>
+                                <p style="font-size: 1.5rem; margin: 0;">{pct_auth:.1f}%</p>
+                                <p style="margin: 0;">({st.session_state.stats['billets_authentiques']} sur {total})</p>
+                            </div>
+                            <div style="background: #ef4444; padding: 1rem; margin: 0.5rem 0; border-radius: 8px;">
+                                <h4>❌ Billets Suspects</h4>
+                                <p style="font-size: 1.5rem; margin: 0;">{pct_susp:.1f}%</p>
+                                <p style="margin: 0;">({st.session_state.stats['billets_suspects']} sur {total})</p>
+                            </div>
+                        </div>
+                        """, unsafe_allow_html=True)
+                        st.markdown('</div>', unsafe_allow_html=True)
+                    
+                    # Affichage détaillé des comptes
+                    st.markdown("### 📋 Résumé des Prédictions")
+                    st.markdown('<div class="result-card">', unsafe_allow_html=True)
+                    
+                    st.write("**Détail par catégorie :**")
+                    st.write(compter)
+                    
+                    # Affichage conditionnel selon les résultats
+                    if st.session_state.stats['billets_suspects'] > 0:
+                        st.error(f"⚠️ Attention : {st.session_state.stats['billets_suspects']} billet(s) suspect(s) détecté(s) !")
+                    else:
+                        st.success("✅ Aucun billet suspect détecté. Tous les billets semblent authentiques.")
+                    
+                    st.markdown('</div>', unsafe_allow_html=True)
                     
                     # Tableau des résultats
-                    st.markdown("### 📋 Données Détaillées")
+                    st.markdown("### 📄 Données Détaillées")
                     st.dataframe(df_resultat, use_container_width=True)
                     
                     # Téléchargement
