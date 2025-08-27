@@ -7,7 +7,7 @@ import io
 st.set_page_config(
     page_title="Détection de faux billets",
     page_icon="",
-    initial_sidebar_state="expanded"
+    layout="wide"
 )
 
 # CSS AVEC TOUCHES DE VERT ERGONOMIQUES
