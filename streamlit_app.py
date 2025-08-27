@@ -11,65 +11,66 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# CSS SIMPLE ET ATTRACTIF
+# CSS AVEC TOUCHES DE VERT ERGONOMIQUES
 st.markdown("""
 <style>
     .main {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
         min-height: 100vh;
     }
     
     .custom-header {
-        background: rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.9);
         padding: 2rem;
         border-radius: 15px;
         margin-bottom: 2rem;
         text-align: center;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        border: 1px solid rgba(16, 185, 129, 0.2);
     }
     
     .custom-header h1 {
-        color: white;
+        color: #1e293b;
         font-size: 2.5rem;
         font-weight: bold;
         margin-bottom: 0.5rem;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
     }
     
     .custom-header p {
-        color: rgba(255, 255, 255, 0.9);
+        color: #475569;
         font-size: 1.2rem;
         margin: 0;
     }
 
     .stat-card {
-        background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        background: rgba(255, 255, 255, 0.95);
         padding: 1.5rem;
         border-radius: 12px;
-        color: white;
+        color: #1e293b;
         text-align: center;
-        box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         margin-bottom: 1rem;
+        border: 1px solid #e2e8f0;
     }
     
     .stat-card h3 {
         margin: 0;
         font-size: 2rem;
         font-weight: bold;
+        color: #10b981;
     }
     
     .stat-card p {
         margin: 0.5rem 0 0 0;
-        opacity: 0.9;
+        color: #64748b;
     }
 
     .upload-zone {
-        background: rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.9);
         padding: 2rem;
         border-radius: 15px;
-        border: 2px dashed rgba(255, 255, 255, 0.5);
-        backdrop-filter: blur(10px);
+        border: 2px dashed #10b981;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
     }
 
     .stButton > button {
@@ -80,42 +81,54 @@ st.markdown("""
         border-radius: 10px;
         font-weight: bold;
         font-size: 1rem;
-        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
         transition: all 0.3s ease;
         width: 100%;
     }
     
     .stButton > button:hover {
         transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
+        box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
     }
 
     [data-testid="stSidebar"] {
-        background: linear-gradient(180deg, #4f46e5, #7c3aed);
+        background: linear-gradient(180deg, #f8fafc, #f1f5f9);
     }
 
     .metric-container {
-        background: rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.9);
         padding: 1rem;
         border-radius: 10px;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        border: 1px solid #e2e8f0;
+        margin-bottom: 1rem;
     }
 
     .result-card {
-        background: rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.95);
         padding: 1.5rem;
         border-radius: 12px;
         margin: 1rem 0;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        border: 1px solid #e2e8f0;
     }
 
     .chart-container {
-        background: rgba(255, 255, 255, 0.05);
+        background: rgba(255, 255, 255, 0.8);
         padding: 1rem;
         border-radius: 10px;
         margin: 0.5rem 0;
+        border: 1px solid #f1f5f9;
+    }
+
+    .success-accent {
+        color: #059669 !important;
+        font-weight: 600;
+    }
+
+    .danger-accent {
+        color: #dc2626 !important;
+        font-weight: 600;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -151,7 +164,7 @@ with st.sidebar:
     col1, col2 = st.columns(2)
     with col1:
         st.markdown(f"""
-        <div style="background: #10b981; padding: 1rem; border-radius: 8px; text-align: center; color: white;">
+        <div style="background: #10b981; padding: 1rem; border-radius: 8px; text-align: center; color: white; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);">
             <h4 style="margin: 0;">{st.session_state.stats['billets_authentiques']}</h4>
             <p style="margin: 0; font-size: 0.8rem;">✅ Vrais</p>
         </div>
@@ -159,7 +172,7 @@ with st.sidebar:
     
     with col2:
         st.markdown(f"""
-        <div style="background: #ef4444; padding: 1rem; border-radius: 8px; text-align: center; color: white;">
+        <div style="background: #64748b; padding: 1rem; border-radius: 8px; text-align: center; color: white; box-shadow: 0 2px 8px rgba(100, 116, 139, 0.3);">
             <h4 style="margin: 0;">{st.session_state.stats['billets_suspects']}</h4>
             <p style="margin: 0; font-size: 0.8rem;">❌ Faux</p>
         </div>
@@ -209,12 +222,10 @@ with col2:
     
     st.markdown("""
     <div class="metric-container">
-        <p style="color: white; margin: 0;"><strong>🟢 API Active</strong></p>
-        <p style="color: rgba(255,255,255,0.8); margin: 0; font-size: 0.9rem;">Modèle IA opérationnel</p>
+        <p style="color: #10b981; margin: 0; font-weight: 600;"><strong>🟢 API Active</strong></p>
+        <p style="color: #64748b; margin: 0; font-size: 0.9rem;">Modèle IA opérationnel</p>
     </div>
     """, unsafe_allow_html=True)
-    
-    st.markdown("---")
     
     st.markdown("### 📈 Fonctionnalités")
     st.markdown("""
@@ -295,7 +306,7 @@ if bouton_valider:
                     
                     with col_g1:
                         st.markdown('<div class="chart-container">', unsafe_allow_html=True)
-                        st.markdown("#### 🥧 Répartition des Prédictions")
+                        st.markdown("#### 📈 Répartition des Prédictions")
                         
                         # Création d'un DataFrame pour le graphique
                         chart_data = pd.DataFrame({
@@ -305,12 +316,12 @@ if bouton_valider:
                         })
                         
                         # Graphique en barres avec Streamlit
-                        st.bar_chart(chart_data.set_index('Type'), height=300, color=["#10b981", "#ef4444"])
+                        st.bar_chart(chart_data.set_index('Type'), height=300, color=["#10b981", "#64748b"])
                         st.markdown('</div>', unsafe_allow_html=True)
                     
                     with col_g2:
                         st.markdown('<div class="chart-container">', unsafe_allow_html=True)
-                        st.markdown("#### 📈 Statistiques Détaillées")
+                        st.markdown("#### 📊 Statistiques Détaillées")
                         
                         # Affichage des pourcentages
                         total = st.session_state.stats['total_analyses']
@@ -318,16 +329,16 @@ if bouton_valider:
                         pct_susp = (st.session_state.stats['billets_suspects'] / total) * 100
                         
                         st.markdown(f"""
-                        <div style="color: white; text-align: center;">
-                            <div style="background: #10b981; padding: 1rem; margin: 0.5rem 0; border-radius: 8px;">
+                        <div style="text-align: center;">
+                            <div style="background: #f0fdf4; border: 1px solid #10b981; color: #065f46; padding: 1rem; margin: 0.5rem 0; border-radius: 8px;">
                                 <h4>✅ Billets Authentiques</h4>
-                                <p style="font-size: 1.5rem; margin: 0;">{pct_auth:.1f}%</p>
-                                <p style="margin: 0;">({st.session_state.stats['billets_authentiques']} sur {total})</p>
+                                <p style="font-size: 1.5rem; margin: 0; color: #10b981; font-weight: bold;">{pct_auth:.1f}%</p>
+                                <p style="margin: 0; color: #065f46;">({st.session_state.stats['billets_authentiques']} sur {total})</p>
                             </div>
-                            <div style="background: #ef4444; padding: 1rem; margin: 0.5rem 0; border-radius: 8px;">
+                            <div style="background: #f8fafc; border: 1px solid #64748b; color: #475569; padding: 1rem; margin: 0.5rem 0; border-radius: 8px;">
                                 <h4>❌ Billets Suspects</h4>
-                                <p style="font-size: 1.5rem; margin: 0;">{pct_susp:.1f}%</p>
-                                <p style="margin: 0;">({st.session_state.stats['billets_suspects']} sur {total})</p>
+                                <p style="font-size: 1.5rem; margin: 0; color: #64748b; font-weight: bold;">{pct_susp:.1f}%</p>
+                                <p style="margin: 0; color: #475569;">({st.session_state.stats['billets_suspects']} sur {total})</p>
                             </div>
                         </div>
                         """, unsafe_allow_html=True)
@@ -377,7 +388,7 @@ if bouton_valider:
 # FOOTER
 st.markdown("---")
 st.markdown("""
-<div style="text-align: center; padding: 1rem; color: rgba(255,255,255,0.8);">
+<div style="text-align: center; padding: 1rem; color: #64748b;">
     <p><strong>🔒 Détection Sécurisée de Faux Billets</strong> - Propulsé par l'IA</p>
 </div>
 """, unsafe_allow_html=True)
