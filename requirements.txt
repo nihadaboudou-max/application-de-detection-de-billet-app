@@ -1,3 +1,5 @@
-streamlit
-pandas 
+fastapi
+uvicorn
+pandas
 requests
+scikit-learn==1.0.2
