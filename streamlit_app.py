@@ -189,7 +189,7 @@ with st.sidebar:
     """)
 
 # SECTION PRINCIPALE
-col1, col2 = st.columns([2, 1])
+col1, col2 = st.columns([3, 0])
 
 with col1:
     st.markdown("Zone d'Analyse")
