@@ -19,7 +19,7 @@ st.markdown("""
     }
     
     .custom-header {
-        background: rgba(255, 200, 150, 0.9);
+        background: rgba(255, 200, 255, 0.9);
         padding: 2rem;
         border-radius: 15px;
         margin-bottom: 2rem;
