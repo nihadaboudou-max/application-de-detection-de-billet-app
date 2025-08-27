@@ -189,32 +189,21 @@ with st.sidebar:
     """)
 
 # SECTION PRINCIPALE
-col1, col2 = st.columns([3, 0])
-
-with col1:
-    st.markdown("Zone d'Analyse")
-    
-    with st.form("formulaire_prediction"):
-        st.markdown('<div class="upload-zone">', unsafe_allow_html=True)
+with st.form("formulaire_prediction"):
+    st.markdown('<div class="upload-zone">', unsafe_allow_html=True)
         
         # Upload de fichier
-        charger_file = st.file_uploader(
-            "Sélectionnez votre fichier CSV",
-            type="csv",
-            help="Téléchargez un fichier CSV contenant les caractéristiques des billets"
-        )
+    charger_file = st.file_uploader("Sélectionnez votre fichier CSV", type="csv", help="Téléchargez un fichier CSV contenant les caractéristiques des billets")
         
         # Sélection du séparateur
-        separateur = st.selectbox(
-            "Choisissez le séparateur",
-            options=["-- Sélectionner --", ",", ";", ".", "/", "|", "\\t", " "],
-            help="Sélectionnez le caractère qui sépare vos données"
-        )
+    separateur = st.selectbox("Choisissez le séparateur",
+        options=["-- Sélectionner --", ",", ";", ".", "/", "|", "\\t", " "],
+        help="Sélectionnez le caractère qui sépare vos données")
         
-        st.markdown('</div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
         
         # Bouton de validation
-        bouton_valider = st.form_submit_button("Analyser les Billets")
+    bouton_valider = st.form_submit_button("Analyser les Billets")
 
 # TRAITEMENT DU FORMULAIRE
 if bouton_valider:
