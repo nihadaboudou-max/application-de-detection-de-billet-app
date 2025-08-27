@@ -187,12 +187,6 @@ with st.sidebar:
     4. **Visualisez** les résultats
     5. **Téléchargez** le rapport
     """)
-
-# SECTION PRINCIPALE
-col1, col2 = st.columns([2, 1])
-
-with col1:
-    st.markdown("Zone d'Analyse")
     
     with st.form("formulaire_prediction"):
         st.markdown('<div class="upload-zone">', unsafe_allow_html=True)
