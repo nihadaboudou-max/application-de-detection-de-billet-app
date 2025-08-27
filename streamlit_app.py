@@ -19,7 +19,7 @@ st.markdown("""
     }
     
     .custom-header {
-        background: rgba(0, 250, 150, 0.9);
+        background: #10c501;
         padding: 2rem;
         border-radius: 15px;
         margin-bottom: 2rem;
@@ -29,14 +29,14 @@ st.markdown("""
     }
     
     .custom-header h1 {
-        color: #1e293b;
+        color: #FFFFFF;
         font-size: 2.5rem;
         font-weight: bold;
         margin-bottom: 0.5rem;
     }
     
     .custom-header p {
-        color: #475569;
+        color: #FFFFFF;
         font-size: 1.2rem;
         margin: 0;
     }
@@ -163,7 +163,7 @@ with st.sidebar:
     col1, col2 = st.columns(2)
     with col1:
         st.markdown(f"""
-        <div style="background: #10b981; padding: 1rem; border-radius: 8px; text-align: center; color: white; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);">
+        <div style="background: #10c501; padding: 1rem; border-radius: 8px; text-align: center; color: white; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);">
             <h4 style="margin: 0;">{st.session_state.stats['billets_authentiques']}</h4>
             <p style="margin: 0; font-size: 0.8rem;">Vrais</p>
         </div>
@@ -171,7 +171,7 @@ with st.sidebar:
     
     with col2:
         st.markdown(f"""
-        <div style="background: #64748b; padding: 1rem; border-radius: 8px; text-align: center; color: white; box-shadow: 0 2px 8px rgba(100, 116, 139, 0.3);">
+        <div style="background: #EF4444; padding: 1rem; border-radius: 8px; text-align: center; color: white; box-shadow: 0 2px 8px rgba(100, 116, 139, 0.3);">
             <h4 style="margin: 0;">{st.session_state.stats['billets_suspects']}</h4>
             <p style="margin: 0; font-size: 0.8rem;">Faux</p>
         </div>
@@ -229,7 +229,7 @@ if bouton_valider:
                 st.markdown("Aperçu des Données")
                 st.dataframe(df.head(), use_container_width=True)
                 
-                status_text.text('Analyse par IA en cours...')
+                status_text.text('Analyse en cours...')
                 progress_bar.progress(75)
                 
                 # Appel API
@@ -285,7 +285,7 @@ if bouton_valider:
                         })
                         
                         # Graphique en barres avec Streamlit
-                        st.bar_chart(chart_data.set_index('Type'), height=300, color=["#10b981", "#64748b"])
+                        st.bar_chart(chart_data.set_index('Type'), height=300, color=["#10c501", "#EF4444"])
                         st.markdown('</div>', unsafe_allow_html=True)
                     
                     with col_g2:
