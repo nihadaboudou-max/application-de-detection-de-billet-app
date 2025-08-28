@@ -283,9 +283,19 @@ if bouton_valider:
                             'Nombre': [st.session_state.stats['billets_authentiques'], 
                                       st.session_state.stats['billets_suspects']]
                         })
-                        
+                        # Mise en forme pour le graphique
+                        df_chart = chart_data.set_index('Type')
+
+                        # Palette de couleurs de base
+                        base_colors = ["#10c501", "#EF4444"]
+
+                        # Adapter la liste de couleurs au nombre réel de colonnes
+                        colors = base_colors[:len(df_chart.columns)]
+
                         # Graphique en barres avec Streamlit
-                        st.bar_chart(chart_data.set_index('Type'), height=300, color=["#10c501", "#EF4444"])
+                        st.bar_chart(df_chart, height=300, color=colors)
+                       
+                        st.markdown('</div>', unsafe_allow_html=True)
                     
                     with col_g2:
                         st.markdown('<div class="chart-container">', unsafe_allow_html=True)
