@@ -73,7 +73,7 @@ st.markdown("""
     }
 
     .stButton > button {
-        background: linear-gradient(135deg, #10b981, #059669);
+        background: #10c501;
         color: white;
         border: none;
         padding: 0.75rem 2rem;
@@ -220,7 +220,7 @@ if bouton_valider:
                 
                 # Lecture du fichier
                 df = pd.read_csv(charger_file, sep=separateur)
-                st.success("Fichier chargé avec succès!")
+                st.toast("Fichier chargé avec succès!")
                 
                 status_text.text('Préparation des données...')
                 progress_bar.progress(50)
@@ -313,16 +313,8 @@ if bouton_valider:
                         """, unsafe_allow_html=True)
                         st.markdown('</div>', unsafe_allow_html=True)
                     
-                    # Affichage conditionnel selon les résultats
-                    if st.session_state.stats['billets_suspects'] > 0:
-                        st.error(f"Attention : {st.session_state.stats['billets_suspects']} billet(s) suspect(s) détecté(s) !")
-                    else:
-                        st.success("Aucun billet suspect détecté. Tous les billets semblent authentiques.")
-                    
-                    st.markdown('</div>', unsafe_allow_html=True)
-                    
                     # Tableau des résultats
-                    st.markdown("Données Détaillées")
+                    st.markdown("Données Détaillées après prédiction")
                     st.dataframe(df_resultat.head(3), use_container_width=True)
                     
                     # Téléchargement
@@ -351,6 +343,6 @@ if bouton_valider:
 st.markdown("---")
 st.markdown("""
 <div style="text-align: center; padding: 1rem; color: #64748b;">
-    <p><strong>Détection Sécurisée de Faux Billets</strong> - Réaliser par Nihad ABOUDOU TRAORE</p>
+    <p><strong>Détection de Faux Billets</strong> - Réaliser par Nihad ABOUDOU TRAORE</p>
 </div>
 """, unsafe_allow_html=True)
