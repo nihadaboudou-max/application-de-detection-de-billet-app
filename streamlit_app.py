@@ -302,23 +302,16 @@ if bouton_valider:
                             <div style="background: #10c501; border: 1px solid #10b981; color: #FFFFFF; padding: 1rem; margin: 0.5rem 0; border-radius: 8px;">
                                 <h4>Billets Authentiques</h4>
                                 <p style="font-size: 1.5rem; margin: 0; color: #FFFFFF; font-weight: bold;">{pct_auth:.1f}%</p>
-                                <p style="margin: 0; color: #065f46;">({st.session_state.stats['billets_authentiques']} sur {total})</p>
+                                <p style="margin: 0; color: #FFFFFF;">({st.session_state.stats['billets_authentiques']} sur {total})</p>
                             </div>
                             <div style="background: #EF4444; border: 1px solid #64748b; color: #FFFFFF; padding: 1rem; margin: 0.5rem 0; border-radius: 8px;">
                                 <h4>Billets Suspects</h4>
                                 <p style="font-size: 1.5rem; margin: 0; color: #FFFFFF; font-weight: bold;">{pct_susp:.1f}%</p>
-                                <p style="margin: 0; color: #475569;">({st.session_state.stats['billets_suspects']} sur {total})</p>
+                                <p style="margin: 0; color: #FFFFFF;">({st.session_state.stats['billets_suspects']} sur {total})</p>
                             </div>
                         </div>
                         """, unsafe_allow_html=True)
                         st.markdown('</div>', unsafe_allow_html=True)
-                    
-                    # Affichage détaillé des comptes
-                    st.markdown("Résumé des Prédictions")
-                    st.markdown('<div class="result-card">', unsafe_allow_html=True)
-                    
-                    st.write("**Détail par catégorie :**")
-                    st.write(compter)
                     
                     # Affichage conditionnel selon les résultats
                     if st.session_state.stats['billets_suspects'] > 0:
@@ -330,7 +323,7 @@ if bouton_valider:
                     
                     # Tableau des résultats
                     st.markdown("Données Détaillées")
-                    st.dataframe(df_resultat, use_container_width=True)
+                    st.dataframe(df_resultat.head(3), use_container_width=True)
                     
                     # Téléchargement
                     csv_memoire = io.StringIO()
