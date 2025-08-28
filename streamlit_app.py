@@ -234,7 +234,7 @@ if bouton_valider:
                 
                 # Appel API
                 reponse = requests.post(
-                    "http://127.0.0.1:8000/predict",
+                    "https://api-detection-billet.onrender.com/predict",
                     files={"file": charger_file.getvalue()},
                     data={"separateur": separateur}
                 )
