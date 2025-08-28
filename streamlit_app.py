@@ -340,7 +340,6 @@ if bouton_valider:
         st.error("Veuillez télécharger un fichier CSV")
 
 # FOOTER
-st.markdown("---")
 st.markdown("""
 <div style="text-align: center; padding: 1rem; color: #64748b;">
     <p><strong>Détection de Faux Billets</strong> - Réaliser par Nihad ABOUDOU TRAORE</p>
