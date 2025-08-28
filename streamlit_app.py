@@ -285,8 +285,7 @@ if bouton_valider:
                         })
                         
                         # Graphique en barres avec Streamlit
-                        st.bar_chart(chart_data.set_index('Type'), height=300, color=["#10c501"])
-                        st.markdown('</div>', unsafe_allow_html=True)
+                        st.bar_chart(chart_data.set_index('Type'), height=300, color=["#10c501", "#EF4444"])
                     
                     with col_g2:
                         st.markdown('<div class="chart-container">', unsafe_allow_html=True)
