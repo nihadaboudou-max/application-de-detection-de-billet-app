@@ -285,8 +285,7 @@ if bouton_valider:
                         })
                         
                         # Graphique en barres avec Streamlit
-                        color_base=["#10c501", "#EF4444"]
-                        st.bar_chart(chart_data.set_index('Type'), height=300, color=color_base[:len(chart_data.columns)])
+                        st.bar_chart(chart_data.set_index('Type'), height=300)
                         st.markdown('</div>', unsafe_allow_html=True)
                     
                     with col_g2:
@@ -300,14 +299,14 @@ if bouton_valider:
                         
                         st.markdown(f"""
                         <div style="text-align: center;">
-                            <div style="background: #f0fdf4; border: 1px solid #10b981; color: #065f46; padding: 1rem; margin: 0.5rem 0; border-radius: 8px;">
+                            <div style="background: #10c501; border: 1px solid #10b981; color: #FFFFFF; padding: 1rem; margin: 0.5rem 0; border-radius: 8px;">
                                 <h4>Billets Authentiques</h4>
-                                <p style="font-size: 1.5rem; margin: 0; color: #10b981; font-weight: bold;">{pct_auth:.1f}%</p>
+                                <p style="font-size: 1.5rem; margin: 0; color: #FFFFFF; font-weight: bold;">{pct_auth:.1f}%</p>
                                 <p style="margin: 0; color: #065f46;">({st.session_state.stats['billets_authentiques']} sur {total})</p>
                             </div>
-                            <div style="background: #f8fafc; border: 1px solid #64748b; color: #475569; padding: 1rem; margin: 0.5rem 0; border-radius: 8px;">
+                            <div style="background: #EF4444; border: 1px solid #64748b; color: #FFFFFF; padding: 1rem; margin: 0.5rem 0; border-radius: 8px;">
                                 <h4>Billets Suspects</h4>
-                                <p style="font-size: 1.5rem; margin: 0; color: #64748b; font-weight: bold;">{pct_susp:.1f}%</p>
+                                <p style="font-size: 1.5rem; margin: 0; color: #FFFFFF; font-weight: bold;">{pct_susp:.1f}%</p>
                                 <p style="margin: 0; color: #475569;">({st.session_state.stats['billets_suspects']} sur {total})</p>
                             </div>
                         </div>
