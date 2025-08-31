@@ -180,11 +180,11 @@ with st.sidebar:
     st.markdown("---")
     st.markdown("Guide d'utilisation")
     st.markdown("""
-    1. **Téléchargez** votre fichier CSV
-    2. **Sélectionnez** le séparateur
-    3. **Lancez** l'analyse
-    4. **Visualisez** les résultats
-    5. **Téléchargez** le rapport
+    1. Téléchargez votre fichier CSV
+    2. Sélectionnez le séparateur
+    3. Lancez l'analyse
+    4. Visualisez les résultats
+    5. Téléchargez le rapport
     """)
 
 # SECTION PRINCIPALE
