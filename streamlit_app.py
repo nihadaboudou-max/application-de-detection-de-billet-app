@@ -152,31 +152,6 @@ with st.sidebar:
             'billets_suspects': 0
         }
     
-    # Affichage des statistiques dans la sidebar
-    st.markdown(f"""
-    <div class="stat-card">
-        <h3>{st.session_state.stats['total_analyses']}</h3>
-        <p>Total Analysé</p>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    col1, col2 = st.columns(2)
-    with col1:
-        st.markdown(f"""
-        <div style="background: #10c501; padding: 1rem; border-radius: 8px; text-align: center; color: white; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);">
-            <h4 style="margin: 0;">{st.session_state.stats['billets_authentiques']}</h4>
-            <p style="margin: 0; font-size: 0.8rem;">Vrais</p>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with col2:
-        st.markdown(f"""
-        <div style="background: #EF4444; padding: 1rem; border-radius: 8px; text-align: center; color: white; box-shadow: 0 2px 8px rgba(100, 116, 139, 0.3);">
-            <h4 style="margin: 0;">{st.session_state.stats['billets_suspects']}</h4>
-            <p style="margin: 0; font-size: 0.8rem;">Faux</p>
-        </div>
-        """, unsafe_allow_html=True)
-    
     st.markdown("---")
     st.markdown("Guide d'utilisation")
     st.markdown("""
@@ -266,8 +241,35 @@ if bouton_valider:
                     with col_m4:
                         pourcentage_authentiques = (st.session_state.stats['billets_authentiques'] / len(df_resultat)) * 100
                         st.metric("Taux Validité", f"{pourcentage_authentiques:.1f}%")
+
+                                    
+                    # Affichage des statistiques dans la sidebar
+                    st.markdown(f"""
+                    <div class="stat-card">
+                        <h3>{st.session_state.stats['total_analyses']}</h3>
+                        <p>Total Analysé</p>
+                    </div>
+                    """, unsafe_allow_html=True)
+                    
+                    col1, col2 = st.columns(2)
+                    with col1:
+                        st.markdown(f"""
+                        <div style="background: #10c501; padding: 1rem; border-radius: 8px; text-align: center; color: white; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);">
+                            <h4 style="margin: 0;">{st.session_state.stats['billets_authentiques']}</h4>
+                            <p style="margin: 0; font-size: 0.8rem;">Vrais</p>
+                        </div>
+                        """, unsafe_allow_html=True)
+                    
+                    with col2:
+                        st.markdown(f"""
+                        <div style="background: #EF4444; padding: 1rem; border-radius: 8px; text-align: center; color: white; box-shadow: 0 2px 8px rgba(100, 116, 139, 0.3);">
+                            <h4 style="margin: 0;">{st.session_state.stats['billets_suspects']}</h4>
+                            <p style="margin: 0; font-size: 0.8rem;">Faux</p>
+                        </div>
+                        """, unsafe_allow_html=True)
                     
                     # Graphiques avec Streamlit natif
+                    st.markdown('<div class="chart-container">', unsafe_allow_html=True
                     st.markdown("Visualisations des Résultats")
                     
                     col_g1, col_g2 = st.columns(2)
