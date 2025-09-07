@@ -189,18 +189,15 @@ with st.sidebar:
 
 # SECTION PRINCIPALE
 with st.form("formulaire_prediction"):
- 
-        # Upload de fichier
+    # Upload de fichier
     charger_file = st.file_uploader("Sélectionnez votre fichier CSV", type="csv", help="Téléchargez un fichier CSV contenant les caractéristiques des billets")
         
-        # Sélection du séparateur
+    # Sélection du séparateur
     separateur = st.selectbox("Choisissez le séparateur",
         options=["-- Sélectionner --", ",", ";", ".", "/", "|", "\\t", " "],
         help="Sélectionnez le caractère qui sépare vos données")
         
-    st.markdown('</div>', unsafe_allow_html=True)
-        
-        # Bouton de validation
+    # Bouton de validation
     bouton_valider = st.form_submit_button("Analyser les Billets")
 
 # TRAITEMENT DU FORMULAIRE
@@ -268,13 +265,12 @@ if bouton_valider:
                         st.metric("Taux Validité", f"{pourcentage_authentiques:.1f}%")
                     
                     # Graphiques avec Streamlit natif
-                    st.markdown('<div class="chart-container">', unsafe_allow_html=True
                     st.markdown("Visualisations des Résultats")
                     
                     col_g1, col_g2 = st.columns(2)
                     
                     with col_g1:
-                    
+                        st.markdown('<div class="chart-container">', unsafe_allow_html=True)
                         st.markdown("Répartition des Prédictions")
                         
                         # Création d'un DataFrame pour le graphique
@@ -289,7 +285,7 @@ if bouton_valider:
                         st.markdown('</div>', unsafe_allow_html=True)
                     
                     with col_g2:
-                        
+                        st.markdown('<div class="chart-container">', unsafe_allow_html=True)
                         st.markdown("Statistiques Détaillées")
                         
                         # Affichage des pourcentages
