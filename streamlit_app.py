@@ -273,7 +273,7 @@ if bouton_valider:
                     col_g1, col_g2 = st.columns(2)
                     
                     with col_g1:
-                        st.markdown('<div class="chart-container">', unsafe_allow_html=True)
+                    
                         st.markdown("Répartition des Prédictions")
                         
                         # Création d'un DataFrame pour le graphique
@@ -288,7 +288,7 @@ if bouton_valider:
                         st.markdown('</div>', unsafe_allow_html=True)
                     
                     with col_g2:
-                        st.markdown('<div class="chart-container">', unsafe_allow_html=True)
+                        
                         st.markdown("Statistiques Détaillées")
                         
                         # Affichage des pourcentages
