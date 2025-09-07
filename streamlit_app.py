@@ -189,8 +189,7 @@ with st.sidebar:
 
 # SECTION PRINCIPALE
 with st.form("formulaire_prediction"):
-    st.markdown('<div class="upload-zone">', unsafe_allow_html=True)
-        
+ 
         # Upload de fichier
     charger_file = st.file_uploader("Sélectionnez votre fichier CSV", type="csv", help="Téléchargez un fichier CSV contenant les caractéristiques des billets")
         
